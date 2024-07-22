@@ -254,4 +254,6 @@ dt_options_tbl <-
     "quarto_use_bootstrap",              FALSE,  "quarto",           "logical", FALSE,
     "latex_use_longtable",               FALSE,  "latex",            "logical", FALSE,
     "latex_tbl_pos",                     FALSE,  "latex",            "value",   "!t",
+    "latex_use_sidewaystable",           FALSE,  "latex",            "logical", FALSE,
+    "latex_full_table_width",            FALSE,  "latex",            "logical", FALSE,
   )[-1, ]

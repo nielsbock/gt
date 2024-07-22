@@ -138,9 +138,29 @@ create_wrap_start_l <- function(data) {
                                                option = "latex_tbl_pos"),
                           "]"))
 
+  asterix <- ifelse(dt_options_get_value(data = data, option = "latex_full_table_width"),
+                    paste0("*"),
+                    ""
+  )
+
   ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
          "\\begingroup\n",
-         paste0("\\begin{table}", tbl_pos, "\n"))
+         ifelse(dt_options_get_value(data = data, option = "latex_use_sidewaystable"),
+                ifelse(check_quarto(),
+                       "",
+                       paste0("\\begin{sidewaystable",
+                              asterix,
+                              "}",
+                              tbl_pos,
+                              "\n")
+                ),
+                paste0("\\begin{table",
+                       asterix,
+                       "}",
+                       tbl_pos,
+                       "\n")
+         )
+  )
 }
 
 #' @noRd
@@ -267,6 +287,48 @@ create_table_start_l <- function(data, colwidth_df) {
     "}\n",
     collapse = ""
   )
+}
+
+#' Create the caption component of a table
+#'
+#' The table caption component contains the caption; if
+#' there are no caption components defined this function will return an empty
+#' string.
+#'
+#' @noRd
+create_caption_component_l <- function(data) {
+
+  # Create the table caption if available
+  table_caption <- dt_options_get_value(data = data, option = "table_caption")
+
+  if (!all(is.na(table_caption))) {
+
+    table_caption <- process_text(table_caption, context = "latex")
+
+    if (isTRUE(getOption("knitr.in.progress"))) {
+
+      table_caption <- kable_caption(label = NULL, table_caption, "latex")
+      ifelse(check_quarto(),
+             "",
+             paste0("\\caption",
+                    latex_group(table_caption),
+                    ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+                           " \\\\ \n",
+                           " \n")
+             )
+      )
+    } else {
+      paste0("\\caption",
+             latex_group(table_caption),
+             ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+                    " \\\\ \n",
+                    " \n")
+      )
+    }
+
+  } else {
+    NULL
+  }
 }
 
 #' Create the heading component of a table
@@ -979,9 +1041,28 @@ create_table_end_l <- function(data) {
 
 #' @noRd
 create_wrap_end_l <- function(data) {
+
+  asterix <- ifelse(dt_options_get_value(data = data, option = "latex_full_table_width"),
+                    paste0("*"),
+                    ""
+  )
+
   ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
          "\\endgroup\n",
-         "\\end{table}\n")
+         ifelse(dt_options_get_value(data = data, option = "latex_use_sidewaystable"),
+                ifelse(check_quarto(),
+                       "",
+                       paste0("\\end{sidewaystable",
+                              asterix,
+                              "}",
+                              "\n")
+                ),
+                paste0("\\end{table",
+                       asterix,
+                       "}",
+                       "\n")
+         )
+  )
 }
 
 #' @noRd
