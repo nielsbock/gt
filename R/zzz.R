@@ -149,7 +149,7 @@ utils::globalVariables(
 #' - `gt.latex_packages`: A vector of LaTeX package names to use when generating
 #' tables in the LaTeX output context. The set of packages loaded is controlled
 #' by this default vector:
-#' `c("booktabs", "caption", "longtable", "colortbl", "array")`.
+#' `c("booktabs", "caption", "longtable", "rotating", "colortbl", "array")`.
 #'
 #' @keywords internal
 #' @name gt-options
@@ -160,7 +160,7 @@ gt_default_options <-
     gt.row_group.sep = " - ",
     gt.html_tag_check = TRUE,
     gt.latex_packages = c(
-      "booktabs", "caption", "longtable",
+      "booktabs", "caption", "longtable", "rotating",
       "colortbl", "array", "anyfontsize",
       "multirow"
     )

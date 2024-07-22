@@ -534,6 +534,21 @@
 #'   instead set the floating position within the code chunk argument `tbl-pos`.
 #'   The output table will only float if `latex.use_longtable = FALSE`.
 #'
+#' @param latex.use.sidewaystable
+#'
+#'   *Use sidewaystable latex environment*
+#'
+#'   Setting this parameter to `TRUE` will use the `sidewaystable` environment
+#'   which will rotate the table 90 degrees. This only works in a floating environment.
+#'
+#' @param latex.full.table.width
+#'
+#'   *Force full table width in latex*
+#'
+#'   Setting this parameter to `TRUE` will use the `table*` environment
+#'   which will force table table width to full text width in two
+#'   column environments.
+#'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
@@ -853,7 +868,9 @@ tab_options <- function(
     quarto.use_bootstrap = NULL,
     quarto.disable_processing = NULL,
     latex.use_longtable = NULL,
-    latex.tbl.pos = NULL
+    latex.tbl.pos = NULL,
+    latex.use_sidewaystable = NULL,
+    latex.full_table_width = NULL
 ) {
 
   # Perform input object validation

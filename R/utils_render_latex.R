@@ -138,9 +138,29 @@ create_wrap_start_l <- function(data) {
                                                option = "latex_tbl_pos"),
                           "]"))
 
+  asterix <- ifelse(dt_options_get_value(data = data, option = "latex_full_table_width"),
+                    paste0("*"),
+                    ""
+  )
+
   ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
          "\\begingroup\n",
-         paste0("\\begin{table}", tbl_pos, "\n"))
+         ifelse(dt_options_get_value(data = data, option = "latex_use_sidewaystable"),
+                ifelse(check_quarto(),
+                       "",
+                       paste0("\\begin{sidewaystable",
+                              asterix,
+                              "}",
+                              tbl_pos,
+                              "\n")
+                ),
+                paste0("\\begin{table",
+                       asterix,
+                       "}",
+                       tbl_pos,
+                       "\n")
+         )
+  )
 }
 
 #' @noRd
