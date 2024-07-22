@@ -1046,9 +1046,28 @@ create_table_end_l <- function(data) {
 
 #' @noRd
 create_wrap_end_l <- function(data) {
+
+  asterix <- ifelse(dt_options_get_value(data = data, option = "latex_full_table_width"),
+                    paste0("*"),
+                    ""
+  )
+
   ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
          "\\endgroup\n",
-         "\\end{table}\n")
+         ifelse(dt_options_get_value(data = data, option = "latex_use_sidewaystable"),
+                ifelse(check_quarto(),
+                       "",
+                       paste0("\\end{sidewaystable",
+                              asterix,
+                              "}",
+                              "\n")
+                ),
+                paste0("\\end{table",
+                       asterix,
+                       "}",
+                       "\n")
+         )
+  )
 }
 
 #' @noRd

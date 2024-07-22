@@ -534,7 +534,7 @@
 #'   instead set the floating position within the code chunk argument `tbl-pos`.
 #'   The output table will only float if `latex.use_longtable = FALSE`.
 #'
-#' @param latex.use.sidewaystable
+#' @param latex.use_sidewaystable
 #'
 #'   *Use sidewaystable latex environment*
 #'
